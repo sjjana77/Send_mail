@@ -9,8 +9,8 @@ const Router = () => {
             {/* <Header /> */}
             <div style={{ margin: '0 20px' }}>
                 <Routes>
-                    <Route exact path="/react_task/" element={<Form />} />
-                    <Route exact path="/react_task/test" element={<Test />} />
+                    <Route exact path="/send_mail/" element={<Form />} />
+                    <Route exact path="/send_mail/test" element={<Test />} />
                 </Routes>
             </div>
         </Routerr>

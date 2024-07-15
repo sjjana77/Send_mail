@@ -1,41 +1,45 @@
-import React, { useState } from 'react';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-function App() {
-  const [value, setValue] = useState('');
+const Test = () => {
+  const [data, setData] = useState([]);
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/send_mail/get_mails');
+        setData(response.data);
+      } catch (error) {
+        console.error('Error fetching data: ', error);
+      }
+    };
+
+    fetchData();  
+  }, []);
 
   return (
-    <>
-      <TextField
-        label="Multiline Textarea"
-        multiline
-        rows={20}
-        variant="outlined"
-        fullWidth
-        placeholder="Enter your text here"
-        value={value}
-        onChange={handleChange}
-        sx={{
-          '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-              borderColor: 'primary.main',
-            },
-            '&:hover fieldset': {
-              borderColor: 'primary.light',
-            },
-            '&.Mui-focused fieldset': {
-              borderColor: 'primary.dark',
-            },
-          },
-        }}
-      />
-    </>
+    <div>
+      <h2>Users List</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map(user => (
+            <tr key={user.id}>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              <td>{user.phone}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
-}
+};
 
-export default App;
+export default Test;
